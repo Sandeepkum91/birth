@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7e7df">
+<title>For Tanya, My Bestie 💗</title>
+<style>
+  :root {
+    --paper: #fff9ed;
+    --ink: #403047;
+    --pink: #d85e8b;
+    --rose: #f6c8d5;
+    --gold: #c99a43;
+    --cover: #8d355d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    background:
+      radial-gradient(ellipse at 15% 10%, #fff8e9 0, transparent 35%),
+      radial-gradient(ellipse at 90% 80%, #e9b9c7 0, transparent 40%),
+      linear-gradient(135deg, #f4d9d6, #f8ebdc 48%, #e8c4cd);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px 14px 30px; overflow-x: hidden;
+  }
+  .topline { text-align: center; margin: 0 0 16px; }
+  .topline .eyebrow { text-transform: uppercase; letter-spacing: .22em; font: 700 10px/1.4 Arial,sans-serif; color: #92516d; }
+  h1 { font-size: clamp(23px, 5vw, 34px); margin: 7px 0 5px; font-weight: 500; }
+  .subtitle { font: 13px/1.5 Arial,sans-serif; color: #795b70; }
+  .stage { width: min(900px, 100%); perspective: 1800px; }
+  .book {
+    position: relative; width: 100%; height: clamp(440px, 68vw, 560px);
+    display: flex; filter: drop-shadow(0 22px 22px #6b30442c);
+    transform-style: preserve-3d;
+  }
+  .back-cover {
+    position: absolute; inset: 0; border-radius: 8px 16px 16px 8px;
+    background: linear-gradient(120deg, #6f2448, #9c4166 48%, #6e2347);
+    box-shadow: inset 8px 0 14px #39172c55, inset -4px 0 7px #f7c8d333, 0 4px 0 #60203e;
+  }
+  .left-page, .right-page {
+    position: absolute; top: 8px; bottom: 8px; width: 50%;
+    background: var(--paper); overflow: hidden;
+  }
+  .left-page {
+    left: 8px; border-radius: 5px 0 0 5px;
+    background: linear-gradient(90deg, #f0e0c7, #fff9ed 8%, #fff9ed 90%, #eadbc4);
+    box-shadow: inset 8px 0 12px #6b4d2510, inset 0 -7px 8px #9b765012;
+  }
+  .right-page {
+    right: 8px; border-radius: 0 5px 5px 0;
+    background: linear-gradient(270deg, #f0e0c7, #fff9ed 8%, #fff9ed 90%, #eadbc4);
+    box-shadow: inset -8px 0 12px #6b4d2510, inset 0 -7px 8px #9b765012;
+  }
+  .spine {
+    position: absolute; top: 8px; bottom: 8px; left: 50%; width: 20px;
+    transform: translateX(-50%); z-index: 20; pointer-events: none;
+    background: linear-gradient(90deg, #bca78c22, #765b3b18 45%, #fff8e6aa 52%, #bca78c22);
+  }
+  .page-content {
+    height: 100%; padding: clamp(18px, 3.2vw, 34px) clamp(13px, 2.8vw, 28px);
+    position: relative; display: flex; flex-direction: column; justify-content: center;
+    overflow-y: auto; scrollbar-width: thin; scrollbar-color: #e5b7c7 transparent;
+  }
+  .page-content::after {
+    content: ""; position: absolute; inset: 10px; border: 1px solid #d9b7a355; pointer-events: none;
+  }
+  .page-number { position: absolute; bottom: 17px; left: 0; right: 0; text-align: center; font: 11px Arial,sans-serif; color: #b18b83; }
+  .kicker { font: 700 10px/1.5 Arial,sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--pink); margin-bottom: 10px; }
+  h2 { font-size: clamp(20px, 3vw, 31px); line-height: 1.12; margin: 0 0 14px; font-weight: 500; color: #793651; }
+  p { font-size: clamp(12px, 1.65vw, 16px); line-height: 1.7; margin: 0 0 12px; }
+  .script { font-style: italic; color: #a74470; }
+  .big-heart { color: #d65d8a; font-size: 40px; text-align: center; margin: 5px 0; }
+  .center { text-align: center; align-items: center; }
+  .ribbon { display: inline-block; background: #f5d1dc; padding: 6px 13px; border-radius: 3px; transform: rotate(-2deg); color: #873a5c; font-size: 13px; margin: 5px auto 15px; }
+  .doodle { position: absolute; color: #dc8ba4; opacity: .65; font-size: 25px; }
+  .d1 { top: 18px; right: 22px; transform: rotate(15deg); }
+  .d2 { bottom: 35px; left: 22px; transform: rotate(-15deg); }
+  .quote { border-left: 3px solid #e6a4b9; padding-left: 13px; margin: 8px 0 14px; font-style: italic; color: #86516b; }
+  .page { position: absolute; inset: 8px 8px 8px 50%; z-index: 10; transform-origin: left center; transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2,.7,.15,1); box-shadow: 0 2px 10px #3d23301c; }
+  .page.flipped { transform: rotateY(-180deg); box-shadow: -10px 4px 18px #3d23302b; }
+  .page .face {
+    position: absolute; inset: 0; backface-visibility: hidden; overflow: hidden;
+    background: linear-gradient(270deg, #f0e0c7, #fff9ed 8%, #fff9ed 90%, #eadbc4);
+    border-radius: 0 5px 5px 0; box-shadow: 1px 1px 5px #65472b12;
+  }
+  .page .face.back {
+    transform: rotateY(180deg);
+    background: linear-gradient(90deg, #f0e0c7, #fff9ed 8%, #fff9ed 90%, #eadbc4);
+    border-radius: 5px 0 0 5px;
+  }
+  .page .page-content { padding: clamp(19px, 4vw, 42px) clamp(16px, 3.6vw, 38px); }
+  .cover-design {
+    height: 100%; margin: 8px; border: 1px solid #e9bd9b; border-radius: 5px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; color: #fff3e7; padding: 24px;
+    background: radial-gradient(circle at 50% 38%, #ad4f75, transparent 46%);
+  }
+  .cover-design .small { font: 700 10px Arial,sans-serif; letter-spacing: .25em; text-transform: uppercase; color: #f6d8c4; }
+  .cover-design h2 { color: #fff2e6; font-size: clamp(28px, 5vw, 48px); margin: 22px 0 12px; }
+  .cover-design .name { font-size: clamp(34px, 6vw, 62px); font-style: italic; color: #ffd8e3; line-height: 1; }
+  .cover-design .rule { width: 90px; height: 1px; background: #edc69c; margin: 20px; }
+  .cover-design p { max-width: 270px; color: #ffebdf; }
+  .cover-heart { font-size: 34px; margin-top: 16px; color: #ffd8e3; }
+  .controls { display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; margin: 20px 0 8px; }
+  button {
+    border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer;
+    background: #853657; color: #fff8f2; font: 700 13px Arial,sans-serif;
+    box-shadow: 0 5px 12px #6d2b4925; transition: transform .15s, opacity .15s;
+  }
+  button:hover { transform: translateY(-2px); }
+  button:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+  .counter { font: 12px Arial,sans-serif; color: #81536a; min-width: 75px; text-align: center; }
+  .hint { font: 12px/1.5 Arial,sans-serif; text-align: center; color: #825d70; margin-top: 5px; }
+  .progress { height: 4px; width: min(250px, 75%); margin: 13px auto 0; background: #e9c8d0; border-radius: 99px; overflow: hidden; }
+  .progress span { display: block; height: 100%; width: 0%; background: #9c4166; transition: width .5s; }
+  .footer { font: italic 12px Georgia,serif; text-align: center; color: #95677c; margin-top: 18px; }
+  @media (max-width: 560px) {
+    body { padding: 17px 8px 24px; }
+    .book { height: min(76vh, 560px); min-height: 440px; }
+    .page-content { padding: 17px 12px; justify-content: flex-start; }
+    p { font-size: 11px; line-height: 1.5; margin-bottom: 9px; }
+    h2 { font-size: clamp(17px, 4.5vw, 20px); margin-bottom: 10px; }
+    .kicker { font-size: 8px; letter-spacing: .1em; }
+    .page-number { bottom: 12px; }
+    .page .page-content { padding: 19px 14px; }
+    .spine { width: 12px; }
+    .cover-design { padding: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .page { transition: none; } }
+</style>
+</head>
+<body>
+  <header class="topline">
+    <div class="eyebrow">A little something, made with love</div>
+    <h1>For Tanya, My Bestie 💗</h1>
+    <div class="subtitle">Turn each page slowly… this little book is just for you.</div>
+  </header>
+
+  <main class="stage">
+    <div class="book" id="book" aria-label="Interactive birthday wish book">
+      <div class="back-cover"></div>
+      <section class="left-page" aria-label="Left page">
+        <div class="page-content" id="leftContent"></div>
+      </section>
+      <section class="right-page" aria-label="Current right page">
+        <div class="page-content" id="rightContent"></div>
+      </section>
+      <div class="spine"></div>
+      <div id="turningPages"></div>
+    </div>
+  </main>
+
+  <div class="controls">
+    <button id="prevBtn" type="button">← Previous page</button>
+    <span class="counter" id="counter">Cover · 1 of 5</span>
+    <button id="nextBtn" type="button">Turn page →</button>
+  </div>
+  <div class="hint" id="hint">Tap “Open the book” to begin your little birthday journey ✨</div>
+  <div class="progress"><span id="progress"></span></div>
+  <div class="footer">Made especially for Tanya · Your bestie, always ♡</div>
+
+<script>
+const pages = [
+  {
+    left: `<div class="cover-design">
+      <div class="small">A tiny book of big feelings</div>
+      <div class="cover-heart">♡</div>
+      <h2>Happy Birthday</h2>
+      <div class="name">Tanya</div>
+      <div class="rule"></div>
+      <p>To my favourite human, my partner in crime, and my forever bestie.</p>
+      <div class="cover-heart">✧ ♡ ✧</div>
+      <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase">Open when you're ready to smile</p>
+    </div>`,
+    right: `<span class="doodle d1">♡</span><span class="doodle d2">✿</span>
+      <div class="page-content center">
+        <div class="kicker">Page 1 · A note for you</div>
+        <div class="big-heart">♡</div>
+        <h2>Dear Tanya,<br>My Bestie!</h2>
+        <div class="ribbon">This little book is all yours</div>
+        <p>Aaj ka din special hai, kyunki aaj uss insaan ka birthday hai jo apni smile aur apni pagal si baaton se sab kuch thoda better bana deti hai. 🥹</p>
+        <p>Ye koi store se liya hua gift nahi… bas kuch words, thoda sa pyaar, aur bahut saari bestie wali feelings. 💗</p>
+        <p class="script">So, turn the page, birthday girl…</p>
+        <div class="page-number">01</div>
+      </div>`
+  },
+  {
+    left: `<span class="doodle d1">♡</span>
+      <div class="page-content">
+        <div class="kicker">Page 2 · Our friendship</div>
+        <h2>Some people just feel like home. 🫶</h2>
+        <p>Tanya, tu un logon mein se hai jinke saath normal si baat bhi memory ban jaati hai.</p>
+        <p>Chahe hum hasi-mazaak karein, random baatein karein, ya bas ek doosre ko sun lein — friendship ka apna hi comfort hota hai.</p>
+        <div class="quote">“Bestie woh nahi jo har waqt paas ho; bestie woh hai jiske saath dil apna sa feel kare.”</div>
+        <p>Thank you for being exactly the kind of person you are. Never underestimate how lovely your presence can be. 💕</p>
+        <div class="page-number">02</div>
+      </div>`,
+    right: `<span class="doodle d2">✿</span>
+      <div class="page-content center">
+        <div class="kicker">A little reminder</div>
+        <div class="big-heart">♡</div>
+        <h2>Same madness.<br>Forever besties.</h2>
+        <p class="script">Life is more fun with you in it.</p>
+        <p>May we always have reasons to laugh at the silliest things, make unforgettable memories, and cheer for each other’s little and big wins. 🥹</p>
+        <p>And obviously… meri bestie ko tang karne ka lifetime membership mere paas hi rahega. 😂💗</p>
+        <div class="page-number">03</div>
+      </div>`
+  },
+  {
+    left: `<span class="doodle d1">✧</span>
+      <div class="page-content">
+        <div class="kicker">Page 3 · Birthday wishes</div>
+        <h2>May this year be gentle and magical. ✨</h2>
+        <p>Dua hai ki tere saare dreams dheere-dheere reality ban jaayein, teri mehnat ko beautiful results milein, aur tere paas khush hone ke hazaar reasons hon.</p>
+        <p>May you find peace when life feels heavy, courage when things feel scary, and people who love you exactly as you are.</p>
+        <p>Less tension, more laughter. Less overthinking, more living. More adventures, more success, and lots of cake! 🎂</p>
+        <div class="page-number">04</div>
+      </div>`,
+    right: `<span class="doodle d1">♡</span><span class="doodle d2">✦</span>
+      <div class="page-content center">
+        <div class="kicker">Your year, your glow</div>
+        <h2>Keep shining, Tanya!</h2>
+        <div class="ribbon">You deserve good things</div>
+        <p>Never make yourself smaller to fit into someone else’s world. Teri kindness, tera sense of humour, aur teri individuality — sab precious hai.</p>
+        <p>Believe in yourself on the days when everything feels easy, and especially on the days when it doesn’t.</p>
+        <p class="script">The world needs your kind of sparkle. ✨</p>
+        <div class="page-number">05</div>
+      </div>`
+  },
+  {
+    left: `<span class="doodle d1">♡</span>
+      <div class="page-content center">
+        <div class="kicker">Page 4 · From my heart</div>
+        <div class="big-heart">♥</div>
+        <h2>One thing I hope you always remember…</h2>
+        <p>You don't have to be perfect to be loved. You don't have to have everything figured out to be doing well.</p>
+        <p>Bas apna khayal rakhna, apni happiness ko importance dena, aur kabhi mat bhoolna ki tu kitni special hai.</p>
+        <p>On your best days, celebrate yourself. On your hard days, be gentle with yourself. You deserve both. 🫂</p>
+        <div class="page-number">06</div>
+      </div>`,
+    right: `<span class="doodle d1">♡</span>
+      <div class="page-content center">
+        <div class="kicker">The last page · But not the last wish</div>
+        <div class="big-heart">💗</div>
+        <h2>Happy Birthday,<br>Tanya — My Bestie!</h2>
+        <p>Thank you for being you. I hope this new chapter brings you unexpected happiness, beautiful memories, and so many reasons to smile.</p>
+        <p class="script">Stay happy. Stay crazy. Stay YOU.</p>
+        <div class="ribbon">Besties today, tomorrow & always</div>
+        <p>Sending you the biggest virtual hug and all the birthday love in the world. 🫂🎂💖</p>
+        <div class="big-heart">♡</div>
+        <div class="page-number">07 · With love</div>
+      </div>`
+  }
+  ,
+  {
+    left: `<span class="doodle d1">✿</span>
+      <div class="page-content">
+        <div class="kicker">A page for your smile</div>
+        <h2>Your smile deserves its own little celebration. 🌷</h2>
+        <p>Pata hai, kabhi-kabhi ek simple si smile bhi kisi ka poora din better kar sakti hai. Teri smile mein wahi magic hai.</p>
+        <p>I hope you get a hundred tiny reasons to smile this year — unexpected messages, favourite songs, good food, peaceful evenings, and people who genuinely care.</p>
+        <div class="quote">“May your happy moments be loud, and your peaceful moments be deep.”</div>
+        <div class="page-number">08</div>
+      </div>`,
+    right: `<div class="page-content center">
+      <div class="kicker">A tiny bestie promise</div><div class="big-heart">♡</div>
+      <h2>One day at a time, okay?</h2>
+      <p>You don't need to have every answer today. Take your time, learn, grow, rest, and begin again whenever you need to.</p>
+      <p>And whenever life feels a little too much, remember: you have someone cheering for you from your corner. 🫶</p>
+      <div class="ribbon">I'm always rooting for you</div>
+      <div class="page-number">09</div>
+    </div>`
+  },
+  {
+    left: `<span class="doodle d1">✧</span>
+      <div class="page-content">
+        <div class="kicker">Things I wish for you</div>
+        <h2>More of the good stuff. ✨</h2>
+        <p>More belly laughs. More late-night talks. More spontaneous plans that turn into the best memories.</p>
+        <p>More confidence to say yes to what excites you, and no to what steals your peace.</p>
+        <p>More opportunities that make you proud of yourself — and more moments where you stop, look around, and think, “I'm really happy right now.” 💗</p>
+        <div class="page-number">10</div>
+      </div>`,
+    right: `<div class="page-content center">
+      <div class="kicker">A little gratitude</div><div class="big-heart">♥</div>
+      <h2>I'm glad the world has you.</h2>
+      <p>There are so many people in this world, but only a few make life feel warmer just by being themselves.</p>
+      <p>Thank you for the laughs, the random conversations, the silly moments, and the simple comfort of being my bestie.</p>
+      <p class="script">You matter more than you know.</p>
+      <div class="page-number">11</div>
+    </div>`
+  },
+  {
+    left: `<span class="doodle d1">♡</span>
+      <div class="page-content">
+        <div class="kicker">Read this on a hard day</div>
+        <h2>Dear Tanya, be kind to yourself. 🫂</h2>
+        <p>If a day doesn't go as planned, it doesn't mean you're failing. If you feel tired, you are allowed to rest. If you need help, you are allowed to ask.</p>
+        <p>You can be a work in progress and still be someone wonderful. Please give yourself the same kindness you give to the people you love.</p>
+        <div class="quote">You deserve softness, patience, and a little extra love — especially from yourself.</div>
+        <div class="page-number">12</div>
+      </div>`,
+    right: `<div class="page-content center">
+      <div class="kicker">A wish for your next chapter</div><div class="big-heart">✧</div>
+      <h2>May life surprise you beautifully.</h2>
+      <p>May the right doors open, may your efforts find their way to good things, and may you never lose the little spark that makes you, YOU.</p>
+      <p>May you collect moments that become stories you tell with a smile for years to come.</p>
+      <div class="ribbon">Your next chapter starts now</div>
+      <div class="page-number">13</div>
+    </div>`
+  },
+  {
+    left: `<div class="page-content center">
+      <div class="kicker">Before you close this book</div><div class="big-heart">💌</div>
+      <h2>One last thing…</h2>
+      <p>Birthday wishes are lovely, but I hope you feel celebrated long after today is over, too.</p>
+      <p>You deserve love on ordinary Tuesdays, encouragement on difficult days, and people who remember to check on you even when there is no special occasion.</p>
+      <p class="script">You are loved on the regular days, too.</p>
+      <div class="page-number">14</div>
+    </div>`,
+    right: `<div class="page-content center">
+      <div class="kicker">The final page · A forever wish</div>
+      <div class="big-heart">💗</div>
+      <h2>Happy Birthday,<br>Tanya — My Bestie!</h2>
+      <p>May this year bring you genuine happiness, brave new beginnings, peaceful nights, exciting adventures, and memories that feel like sunshine.</p>
+      <p>Stay kind. Stay wonderfully silly. Keep dreaming big, and never forget how special you are.</p>
+      <div class="ribbon">Besties today, tomorrow & always</div>
+      <p class="script">All my love, always. 🫂🎂💖</p>
+      <div class="page-number">15 · With love</div>
+    </div>`
+  }
+];
+
+const leftContent = document.getElementById('leftContent');
+const rightContent = document.getElementById('rightContent');
+const turningPages = document.getElementById('turningPages');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const counter = document.getElementById('counter');
+const hint = document.getElementById('hint');
+const progress = document.getElementById('progress');
+
+let current = 0; // cover is 0; then five page turns
+let busy = false;
+
+function coverMarkup() {
+  return `<div class="cover-design">
+    <div class="small">A tiny book of big feelings</div>
+    <div class="cover-heart">♡</div>
+    <h2>Happy Birthday</h2>
+    <div class="name">Tanya</div>
+    <div class="rule"></div>
+    <p>To my favourite human, my partner in crime, and my forever bestie.</p>
+    <div class="cover-heart">✧ ♡ ✧</div>
+    <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase">Open when you're ready to smile</p>
+  </div>`;
+}
+
+function pageContents(index) {
+  if (index === 0) {
+    leftContent.innerHTML = coverMarkup();
+    rightContent.innerHTML = `<div class="page-content center">
+      <div class="kicker">A birthday surprise</div>
+      <div class="big-heart">♡</div>
+      <h2>For Tanya,<br>My Bestie</h2>
+      <p>Ek chhoti si book, sirf tere liye. 💌</p>
+      <p>Har page mein ek wish, ek reminder, aur thoda sa pyaar chhupa hai.</p>
+      <div class="ribbon">Ready, birthday girl?</div>
+      <p class="script">Tap “Open the book” to start…</p>
+      <div class="page-number">Cover</div>
+    </div>`;
+  } else {
+    const spread = pages[Math.min(index - 1, pages.length - 1)];
+    leftContent.innerHTML = spread.left;
+    rightContent.innerHTML = spread.right;
+  }
+}
+
+function buildTurnPage(index) {
+  const oldSpread = pages[Math.min(index - 1, pages.length - 1)];
+  const newSpread = pages[Math.min(index, pages.length - 1)];
+  const wrapper = document.createElement('div');
+  wrapper.className = 'page';
+  wrapper.innerHTML = `
+    <div class="face front">${oldSpread.right}</div>
+    <div class="face back">${newSpread.left}</div>`;
+  return wrapper;
+}
+
+function render() {
+  // Rebuild the visible spread from the current index; buttons always reflect the real state.
+  pageContents(current);
+  turningPages.innerHTML = '';
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === pages.length;
+  nextBtn.textContent = current === 0 ? 'Open the book →' : current === pages.length ? 'The end ♡' : 'Turn page →';
+  counter.textContent = current === 0 ? 'Cover · start here' : `Spread ${current} of ${pages.length}`;
+  hint.textContent = current === 0
+    ? 'Tap “Open the book” to begin your little birthday journey ✨'
+    : current === pages.length
+      ? 'You reached the last page… but the love doesn’t end here. 💗'
+      : 'Turn the page slowly — there’s another little wish waiting for you. ✨';
+  progress.style.width = `${current / pages.length * 100}%`;
+}
+
+function turn(direction) {
+  if (busy) return;
+  const target = Math.max(0, Math.min(pages.length, current + direction));
+  if (target === current) return;
+
+  // Back navigation is deliberately immediate and reliable; forward navigation gets the page-flip effect.
+  if (direction < 0) {
+    // Previous must work from every page, including the final page.
+    // Clear any leftover animated leaf before restoring the earlier spread.
+    busy = false;
+    current = target;
+    render();
+    return;
+  }
+
+  busy = true;
+  prevBtn.disabled = true;
+  nextBtn.disabled = true;
+
+  const frontMarkup = rightContent.innerHTML;
+  const backMarkup = pages[Math.min(target - 1, pages.length - 1)].left;
+  const leaf = document.createElement('div');
+  leaf.className = 'page';
+  leaf.style.zIndex = '100';
+  leaf.innerHTML = `<div class="face front">${frontMarkup}</div><div class="face back">${backMarkup}</div>`;
+  turningPages.appendChild(leaf);
+
+  // Start after the browser paints the unturned page.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => leaf.classList.add('flipped'));
+  });
+
+  window.setTimeout(() => {
+    current = target;
+    busy = false;
+    render();
+  }, 950);
+}
+
+nextBtn.addEventListener('click', () => turn(1));
+prevBtn.addEventListener('click', () => turn(-1));
+
+const book = document.getElementById('book');
+book.addEventListener('click', (event) => {
+  if (event.target.closest('button')) return;
+  if (current < pages.length) turn(1);
+});
+
+// Swipe left/right on phones; keyboard arrows also work.
+let touchStartX = null;
+book.addEventListener('touchstart', (event) => {
+  touchStartX = event.changedTouches[0].clientX;
+}, { passive: true });
+book.addEventListener('touchend', (event) => {
+  if (touchStartX === null) return;
+  const deltaX = event.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(deltaX) > 45) turn(deltaX < 0 ? 1 : -1);
+  touchStartX = null;
+}, { passive: true });
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowRight') turn(1);
+  if (event.key === 'ArrowLeft') turn(-1);
+});
+render();
+</script>
+</body>
+</html>
